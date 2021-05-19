@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-4">
+            <h1>Thêm Nhân Viên</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Thêm Nhân Viên</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-10">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Thông Tin Cá Nhân</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form action="" method="post">
+                {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group">
+                    <i class="nav-icon fas fa-user-circle"></i>
+                    <label >Tên Đăng Nhập</label>
+                    <input type="text" class="form-control" placeholder="Tên Đăng Nhập" name="tendangnhap" >
+                  </div>
+                  <div class="form-group">
+                    <i class="fas fa-key"></i>
+                    <label for="exampleInputPassword1">Mật Khẩu</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Mật Khẩu" name="matkhau" >
+                  </div>
+                  <div class="form-group">
+                    <i class="fas fa-envelope"></i>
+                    <label for="exampleInputEmail1">Email</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" name="email" >
+                  </div>
+                    <div class="form-group">
+                      <i class="fas fa-file-signature"></i>
+                    <label >First Name</label>
+                    <input type="text" class="form-control" placeholder="Họ và Tên Đệm" name="first_name" >
+                  </div>
+                    <div class="form-group">
+                      <i class="fas fa-user-tag"></i>
+                    <label >Last Name</label>
+                    <input type="text" class="form-control" placeholder="Tên" name="last_name" >
+                  </div>
+                   <div class="form-group">
+                      <i class="fas fa-person-booth"></i>
+                        <label>Phòng Ban</label>
+                        <select class="form-control" name="phongban">
+                          {% for item in pb %}
+                            <option value="{{item.id}}">{{ item.ten_pb }}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                  <div class="form-group">
+                      <i class="fas fa-briefcase"></i>
+                        <label>Chức Vụ</label>
+                        <select class="form-control" name="chucvu">
+                          {% for item in cv %}
+                            <option value="{{item.id}}">{{ item.ten_cv }}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                    <div class="form-group">
+                      <i class="fas fa-phone-alt"></i>
+                    <label >Số Điện Thoại</label>
+                    <input type="text" class="form-control" placeholder="Số Điện Thoại" name="phone" >
+                  </div>
+                     <div class="form-group">
+                       <i class="fas fa-location-arrow"></i>
+                    <label >Địa Chỉ</label>
+                    <input type="text" class="form-control" placeholder="Địa Chỉ" name="address" >
+                  </div>
+                    <div class="form-group">
+                      <i class="fas fa-book-open"></i>
+                        <label>Mô Tả</label>
+                        <textarea class="form-control"  placeholder="Thêm mô tả" ></textarea>
+                      </div>
+                  <div class="form-group">
+                    {% if flag %}
+                           <div class="alert alert-success" role="alert">
+                            {{mess}}
+                        </div>
+                    {% elif flag == False %}
+                          <div class="alert alert-danger" role="alert">
+                            {{mess}}
+                          </div>
+                    {% endif %}
+                      </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <a href="{% url 'qlnhanvien'%}" class="btn btn-secondary">Cancel</a>
+                  <button class="btn btn-primary" type="button" >Sửa</button>
+                  <button type="submit" class="btn btn-primary">Thêm</button>
+                </div>
+                </form>
+            </div>
+            <!-- /.card -->
+
+            <!-- general form elements -->
+            <!-- Input addon -->
+            <!-- /.card -->
+            <!-- Horizontal Form -->
+            <!-- /.card -->
+
+          <!--/.col (left) -->
+          <!-- right column -->
+          <!--/.col (right) -->
+        </div>
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+{% endblock %}

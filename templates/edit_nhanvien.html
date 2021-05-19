@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% block content %}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Sửa Thông Tin Nhân Viên</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Sửa Thông Tin Nhân Viên</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <form action="" method="post">
+       {% csrf_token %}
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Edit</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body" >
+              <div class="form-group">
+                  <i class="nav-icon fas fa-user-circle"></i>
+                <label for="inputName">Tên Đăng Nhập</label>
+                <input type="text" id="inputName" class="form-control" value={{us.username}} disabled>
+              </div>
+                <div class="form-group">
+                    <i class="fas fa-key"></i>
+                    <label for="exampleInputPassword1">Mật Khẩu</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" name="matkhau" value={{us.password}}  >
+                  </div>
+                  <div class="form-group">
+                      <i class="fas fa-envelope"></i>
+                    <label for="exampleInputEmail1">Email</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" name="email" value={{us.email}}  >
+                  </div>
+                    <div class="form-group">
+                        <i class="fas fa-file-signature"></i>
+                    <label >First Name</label>
+                    <input type="text" class="form-control" name="first_name" value={{us.first_name}}  >
+                  </div>
+                    <div class="form-group">
+                        <i class="fas fa-user-tag"></i>
+                    <label >Last Name</label>
+                    <input type="text" class="form-control" name="last_name" value={{us.last_name}}  >
+                  </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <div class="col-md-6">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Edit</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                  <i class="fas fa-person-booth"></i>
+                <label for="inputStatus">Phòng Ban</label>
+                <select id="inputStatus" class="form-control custom-select" name="phongban">
+                  {% for item in pb %}
+                    {% if us.phong_ban.id == item.id %}
+                    <option value="{{item.id}}" selected>{{ item.ten_pb }}</option>
+                    {% else %}
+                    <option value="{{item.id}}">{{ item.ten_pb }}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-group">
+                  <i class="fas fa-briefcase"></i>
+                <label for="inputStatus">Chức Vụ</label>
+                <select id="inputStatus" name="chucvu" class="form-control custom-select" >
+                  {% for item in cv %}
+                    {% if us.chuc_vu.id == item.id %}
+                    <option value="{{item.id}}" selected>{{ item.ten_cv }}</option>
+                    {% else %}
+                    <option value="{{item.id}}">{{ item.ten_cv }}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-group">
+                  <i class="fas fa-phone-alt"></i>
+                    <label >Số Điện Thoại</label>
+                    <input type="text" class="form-control" name="phone" value={{us.phone_number}}  >
+                  </div>
+                     <div class="form-group">
+                         <i class="fas fa-location-arrow"></i>
+                    <label >Địa Chỉ</label>
+                    <input type="text" class="form-control" name="address" value={{us.address}}  >
+                  </div>
+                    <div class="form-group">
+                        <i class="fas fa-book-open"></i>
+                        <label>Mô Tả</label>
+                        <textarea class="form-control"  placeholder="Thêm mô tả" ></textarea>
+                      </div>
+            </div>
+            <!-- /.card-body -->
+
+          </div>
+          <!-- /.card -->
+          <!-- /.card -->
+          </div>
+      </div>
+        {% if mess %}
+        <div class="form-group">
+            <div class="alert alert-success" role="alert">{{mess}}</div>
+        </div>
+        {% endif %}
+      <div class="row">
+        <div class="col-12">
+          <a href="{% url 'qlnhanvien' %}" class="btn btn-secondary">Quay Lại</a>
+          <input type="submit" value="Cập Nhật" class="btn btn-success float-right">
+        </div>
+      </div>
+      </form>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+{% endblock %}

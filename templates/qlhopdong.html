@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+ <div class="content-wrapper">
+
+
+    <!--
+    dialog 2
+    -->
+
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Quản Lý Hợp Đồng</h1>
+          </div>
+          <div class="col-sm-6">
+            <a class="btn btn-primary" type="button" href="{% url 'themhopdong' %}" > Thêm Hợp Đồng</a>
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Quản Lý Hợp Đồng</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <!-- /.card -->
+            <div class="card">
+              <div class="card-header">
+                <b><h3 class="card-title">Danh Sách Hợp Đồng</h3></b>
+
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Tên Hợp Đồng</th>
+                    <th>Tên Nhân Viên</th>
+                    <th>Ngày kí</th>
+                    <th>Ngày Kết Thúc</th>
+                      <th> Quản Lý</th>
+                      <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {% for item in cthd %}
+                  <tr id="">
+                    <td>{{item.hopdong.tenhopdong}}</td>
+                    <td>{{item.nhanvien.first_name}} {{item.nhanvien.last_name}}</td>
+                    <td>{{item.ngayki}}</td>
+                    <td>{{item.ngayketthuc}}</td>
+                    <td>{{item.quanli.last_name}}</td>
+                    <td >
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-info">Action</button>
+                            <button type="button" class="btn btn-info dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                            <span class="sr-only">Toggle Dropdown</span>
+                          </button>
+                          <div class="dropdown-menu" role="menu">
+                            <a href="edit/{{item.id}}" class="dropdown-item"  id="{{item.id}}">Sửa</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" id="{{item.id}}" onclick="xoahopdong(this)">Xoá</a>
+                          </div>
+                        </div>
+                      </td>
+                  </tr>
+                  {% endfor %}
+
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>Tên Hợp Đồng</th>
+                    <th>Tên Nhân Viên</th>
+                    <th>Ngày kí</th>
+                    <th>Ngày Kết Thúc</th>
+                      <th> Quản Lý</th>
+                      <th>Action</th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+{% endblock %}
+
+
+{% block content1 %}
+<script>
+  function xoahopdong(e){
+      var id = $(e).attr("id") ;
+
+       if(confirm("Bạn chắc chắn muốn xóa")){
+         $.ajax({
+      url: '/qltuyendung/xoahopdong',
+      method:'get',
+      data:{"id":id},
+      dataType: 'json',
+      contentType: "application/json",
+      success: function (res) {
+         if(res==200){ alert("Xóa thanh công") ; window.location.href="/qltuyendung/qlhopdong"}
+
+         else alert("Xóa thất bại")
+      },
+      error: function (res) {
+       console.log(res)
+      }
+     });
+       }
+    }
+</script>
+
+<script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'plugins/jszip/jszip.min.js' %}"></script>
+<script src="{% static 'plugins/pdfmake/pdfmake.min.js' %}"></script>
+<script src="{% static 'plugins/pdfmake/vfs_fonts.js' %}"></script>
+<script src=".{% static 'plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+{% endblock %}

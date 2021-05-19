@@ -1,0 +1,280 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Thêm Hợp Đồng</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Thêm Hợp Đồng</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+       <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Danh Sách Nhân Viên</h3>
+
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="search_nhanvien" class="form-control float-right" placeholder="Tìm nhân viên">
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn btn-default timnhanvien">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap" id ="mytb">
+                  <thead>
+                      <tr>
+                      <th>ID</th>
+                      <th>User</th>
+                      <th>Họ Và Tên</th>
+                      <th>Email</th>
+                      <th>Số Điện Thoại</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+
+    <section class="content-header">
+      <div class="container-fluid">
+              <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">Thông Tin Hợp Đồng</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form class="form-horizontal" method="post">
+                  {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Tên Nhân Viên</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control"  placeholder="Tên Nhân Viên" name="tenNhanVien" readonly>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label  class="col-sm-2 col-form-label">Mã Nhân Viên</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control"  placeholder="Mã Nhân Viên" name="maNhanVien" readonly>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label  class="col-sm-2 col-form-label">Địa Chỉ</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control"  placeholder="Địa Chỉ" name="diaChi" readonly>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label  class="col-sm-2 col-form-label">Tên Hợp Đồng</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="selecthopdong">
+                            {% for item in hd %}
+                                <option value="{{item.id}}">{{ item.tenhopdong }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                  </div>
+                    <div class="form-group row">
+                    <label  class="col-sm-2 col-form-label">Loại Hợp Đồng</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control"  placeholder="Loại Hợp Đồng" name="loaiHopDong">
+                    </div>
+                  </div>
+                     <div class="form-group row">
+                    <label  class="col-sm-2 col-form-label">Ngày Kí</label>
+                    <div class="col-sm-10">
+                      <div class="input-group date">
+                        <input type="text" name="ngayKi" class="form-control " placeholder="yyyy/mm/dd">
+                        <div class="input-group-append">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                    </div>
+                  </div>
+                     <div class="form-group row">
+                    <label  class="col-sm-2 col-form-label">Ngày Kết Thúc</label>
+                    <div class="col-sm-10">
+                      <div class="input-group date">
+                        <input type="text" name="ngayKetThuc" class="form-control " placeholder="yyyy/mm/dd">
+                        <div class="input-group-append">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                    </div>
+                  </div>
+                     <div class="form-group row">
+                    <label  class="col-sm-2 col-form-label">Mô Tả</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control"  placeholder="Ghi Chú">
+                    </div>
+                  </div>
+                    <div class="form-group row">
+                        <b>{{mess}}</b>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-info">Thêm Mới</button>
+                  <a type="submit" href="{% url 'qlhopdong' %}" class="btn btn-default float-right">Huỷ</a>
+                </div>
+                <!-- /.card-footer -->
+              </form>
+            </div>
+      </div>
+     </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+{% endblock %}
+{% block content1 %}
+
+<script>
+  $('.timnhanvien').click(function () { // xử lí thêm mới
+        var url = '/qltuyendung/laynhanvien' ;
+        var message = 'Thêm mới thành công !' ;
+        var errorMes = 'Bản ghi đã có trong CSDL'
+
+        tennv =  $("input[name=search_nhanvien]").val();
+
+         var datas  = {
+	      "tennv" : tennv
+	       }
+	      $.ajax({
+      url: '/qltuyendung/laynhanvien' ,
+      method:'get',
+      data:datas,
+      dataType: 'json',
+      contentType: "application/json",
+      success: function (res) {
+      var thead = `
+            <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>User</th>
+                      <th>Họ Và Tên</th>
+                      <th>Email</th>
+                      <th>Số Điện Thoại</th>
+                    </tr>
+            </thead>
+            `
+
+      var datatable = '';
+      datatable += thead
+        res.forEach(element => {
+
+            var tr = `
+            <tr onclick="testt(this)" id=${element.id}>
+                <td>${element.id}</td>
+                <td>${element.username}</td>
+                <td>${element.first_name} ${element.last_name}</td>
+                <td>${element.email}</td>
+                <td>${element.phone_number}</td>
+            </tr>
+            `
+            datatable += tr
+
+        });
+        $( "#mytb" ).html(datatable);
+      },
+      error: function (res) {
+       console.log(res)
+       alert(res)
+      }
+     });
+
+	});
+	function testt(e){
+	var id = $(e).attr("id") ;
+	  $.ajax({
+      url: '/qltuyendung/laymoinhanvien',
+      method:'get',
+      data:{"id":id},
+      dataType: 'json',
+      contentType: "application/json",
+      success: function (res) {
+      //viết
+         let lastname_nv = res.last_name
+         let firstname_nv = res.first_name
+         let ten_nv = firstname_nv+' '+lastname_nv
+         let id_nv = res.id
+         let dia_chi = res.address
+         $("input[name=tenNhanVien]").val(ten_nv);
+	     $("input[name=maNhanVien]").val(id_nv);
+	     $("input[name=diaChi]").val(dia_chi);
+      },
+      error: function (res) {
+       console.log(res)
+      }
+     });
+	}
+</script>
+
+<script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'plugins/jszip/jszip.min.js' %}"></script>
+<script src="{% static 'plugins/pdfmake/pdfmake.min.js' %}"></script>
+<script src="{% static 'plugins/pdfmake/vfs_fonts.js' %}"></script>
+<script src=".{% static 'plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+{% endblock %}

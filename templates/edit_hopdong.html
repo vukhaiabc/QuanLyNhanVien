@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Sửa Thông Tin Hợp Đồng</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Sửa Thông Tin Hợp Đồng</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <section class="content-header">
+      <div class="container-fluid">
+              <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">Thông Tin Hợp Đồng</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form class="form-horizontal" method="post">
+                  {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Tên Nhân Viên</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control"  value="{{hdct.nhanvien.first_name}} {{hdct.nhanvien.last_name}}" name="tenNhanVien" readonly>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label  class="col-sm-2 col-form-label">Mã Nhân Viên</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control"  value="{{hdct.nhanvien.id}}" name="maNhanVien" readonly>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label  class="col-sm-2 col-form-label">Địa Chỉ</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control"  value="{{hdct.nhanvien.address}}" name="diaChi" readonly>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label  class="col-sm-2 col-form-label">Tên Hợp Đồng</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="tenhopdong">
+                            {% for item in hd %}
+                                {% if item.id == hdct.hopdong.id %}
+                                    <option value="{{item.id}}" selected>{{ item.tenhopdong }}</option>
+                                {% else %}
+                                    <option value="{{item.id}}">{{ item.tenhopdong }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                  </div>
+                    <div class="form-group row">
+                    <label  class="col-sm-2 col-form-label">Loại Hợp Đồng</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control"  value="{{hdct.loaihopdong}}" name="loaiHopDong">
+                    </div>
+                  </div>
+                     <div class="form-group row">
+                    <label  class="col-sm-2 col-form-label">Ngày Kí</label>
+                    <div class="col-sm-10">
+                      <div class="input-group date">
+                        <input type="text" name="ngayKi" class="form-control " value="{{nk}}">
+                        <div class="input-group-append">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                    </div>
+                  </div>
+                     <div class="form-group row">
+                    <label  class="col-sm-2 col-form-label">Ngày Kết Thúc</label>
+                    <div class="col-sm-10">
+                      <div class="input-group date">
+                        <input type="text" name="ngayKetThuc" class="form-control " value="{{nkt}}">
+                        <div class="input-group-append">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                    </div>
+                  </div>
+                     <div class="form-group row">
+                    <label  class="col-sm-2 col-form-label">Mô Tả</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control"  placeholder="Ghi Chú">
+                    </div>
+                  </div>
+                    <div class="form-group row">
+                        <b>{{mess}}</b>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-info">Cập Nhật</button>
+                  <a type="submit" href="{% url 'qlhopdong' %}" class="btn btn-default float-right">Huỷ</a>
+                </div>
+                <!-- /.card-footer -->
+              </form>
+            </div>
+      </div>
+     </section>
+</div>
+{% endblock %}
+
+{% block content1 %}
+{% endblock %}

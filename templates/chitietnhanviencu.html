@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <div class="content-wrapper">
+      <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Nhân Viên Cũ</h1>
+
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Nhân Viên Cũ</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <form action="#">
+                        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Danh Sách Nhân Viên Cũ</h3>
+              </div>
+              <!-- ./card-header -->
+              <div class="card-body">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>Tên Nhân Viên</th>
+                      <th>Tên Chức Vụ</th>
+                      <th>Thời Gian Nghỉ</th>
+                      <th>Số Điện Thoại</th>
+                      <th>Địa Chỉ</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for item in nvc %}
+                    <tr data-widget="expandable-table" aria-expanded="false">
+                      <td>{{item.tennhanvien}}</td>
+                      <td>{{item.tenchucvu}}</td>
+                      <td>{{item.thoigiannghi}}</td>
+                      <td>{{item.sodienthoai}}</td>
+                      <td>{{item.diachi}}</td>
+                    </tr>
+                    <tr class="expandable-body">
+                      <td colspan="5">
+                        <p>
+                         Lý Do : {{item.lydothoiviec}}
+                        </p>
+                        <p>
+                         Ý Kiến Cá Nhân : {{item.ykiencanhan}}
+                        </p>
+                      </td>
+                    </tr>
+                  {% endfor %}
+
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+              <div class="card-footer">
+                  <a type="button" href="{% url 'qlnghiviec' %}" class="btn btn-info">Quay Lại</a>
+                </div>
+            </form>
+        </div>
+    </section>
+  </div>
+{% endblock %}
+{% block content1 %}
+
+{% endblock %}

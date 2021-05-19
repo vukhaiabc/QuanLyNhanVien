@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <div class="content-wrapper">
+      <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Chi Tiết Số Phiếu Bầu</h1>
+
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Chi Tiết Số Phiếu Bầu</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <form action="#">
+                        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Danh Sách Nhân Viên Bầu Cử</h3>
+              </div>
+              <!-- ./card-header -->
+              <div class="card-body">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>Tên Nhân Viên</th>
+                      <th>Số phiếu</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for item in rs %}
+                    <tr data-widget="expandable-table" aria-expanded="false" id="{{item.nguoiduocbonhiem}}"  onclick="testt(this)">
+                        {% for data in nv %}
+                            {% if item.nguoiduocbonhiem == data.id %}
+                                <td>{{data.first_name}} {{data.last_name}} - {{data.id}} </td>
+                                <td>{{item.dcount}}</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                  {% endfor %}
+
+
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+              <div class="card-footer">
+                  <a type="button" href="{% url 'qlbonhiem' %}" class="btn btn-info">Quay Lại</a>
+                </div>
+            </form>
+        </div>
+    </section>
+  </div>
+{% endblock %}
+{% block content1 %}
+<script>
+function testt(e){
+	  var id = $(e).attr("id") ;
+	  var link = "/qltuyendung/qlbonhiem/chitietbn/" + id
+	  window.location.href = link
+	}
+</script>
+{% endblock %}

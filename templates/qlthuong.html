@@ -1,0 +1,327 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="modal fade" id="dialog1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="" method="post" id="themphucap2">
+                {% csrf_token %}
+            <div class="modal-header">
+                <h5 class="modal-title">Thêm Hoạt Động Thưởng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label >Tên Thưởng</label>
+                    <input type="text" class="form-control" placeholder="Tên" name="tent" >
+                  </div>
+                  <div class="form-group">
+                    <label >Loại Thưởng</label>
+                    <input type="text" class="form-control"  placeholder="Loại" name="loait" >
+                  </div>
+                    <div class="form-group">
+                    <label >Số tiền</label>
+                    <input type="number" class="form-control"  placeholder="Mức Phụ Cấp" name="muct" >
+                  </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button"  class="btn btn-primary themthuong">Lưu lại</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+    <!--
+    dialog 2
+    -->
+    <div class="modal fade" id="dialog2" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="" method="post" id="formphucap">
+                {% csrf_token %}
+            <div class="modal-header">
+                <h5 class="modal-title">Sửa Hoạt Động Thưởng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label >Tên Thưởng</label>
+                    <input type="text" class="form-control" placeholder="Tên" name="saveNamePC" >
+                  </div>
+                  <div class="form-group">
+                    <label >Loại Thưởng</label>
+                    <input type="text" class="form-control"  placeholder="Loại" name="saveTypePC" >
+                  </div>
+                    <div class="form-group">
+                    <label >Mức Thưởng</label>
+                    <input type="number" class="form-control"  placeholder="Mức Phụ Cấp" name="saveLevelPC" >
+                  </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" idthuong="" id="capnhatthuong" class="btn btn-primary" onClick="functiontest(this)">Lưu lại</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+    <!--
+    dialog
+    -->
+
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Quản Lý Thưởng</h1>
+          </div>
+          <div class="col-sm-6">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#dialog1" type="button" > Thêm Thưởng</button>
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Quản Lý Thưởng</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <!-- /.card -->
+            <div class="card">
+              <div class="card-header">
+                <b><h3 class="card-title">Hoạt Động Thưởng</h3></b>
+
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Tên Thưởng</th>
+                    <th>Loại Thưởng</th>
+                    <th>Mức Thưởng</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {% for item in thuong %}
+                  <tr id="">
+                    <td>{{item.ten_t}}</td>
+                    <td>{{item.loai_t}}</td>
+                    <td>{{item.muc_t}}</td>
+                    <td >
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-info">Action</button>
+                            <button type="button" class="btn btn-info dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                            <span class="sr-only">Toggle Dropdown</span>
+                          </button>
+                          <div class="dropdown-menu" role="menu">
+                            <a href="#" class="dropdown-item"  id="{{item.id}}"  onclick="suathuong(this)">Sửa</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" id="{{item.id}}"  onclick="xoathuong(this)">Xoá</a>
+                          </div>
+                        </div>
+                      </td>
+                  </tr>
+                  {% endfor %}
+
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>Tên Thưởng</th>
+                    <th>Loại Thưởng</th>
+                    <th>Mức Thưởng</th>
+                    <th>Action</th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+{% endblock %}
+{% block content1 %}
+
+<script>
+     $('.themthuong').click(function () { // xử lí thêm mới
+        var message = 'Thêm mới thành công !' ;
+        var errorMes = 'Bản ghi đã có trong CSDL'
+
+        tent =  $("input[name=tent]").val();
+        loait = $("input[name=loait]").val();
+        muct = $("input[name=muct]").val();
+
+        id = "";
+         var datas  = {
+	      "tent" : tent,
+	      "loait" : loait ,
+	      "muct" : muct ,
+	      "id" : id
+	       }
+	      $.ajax({
+      url: '/qlluongthuong/themthuong' ,
+      method:'get',
+      data:datas,
+      dataType: 'json',
+      contentType: "application/json",
+      success: function (res) {
+
+       if(res==200) { alert("Thêm mới thành công ! ");window.location.reload()}
+       else  alert("Lưu thất bại , Hoạt Động Thưởng đã tồn tại");  //
+      },
+      error: function (res) {
+       console.log(res)
+       alert(res)
+      }
+     });
+
+	});
+
+	function suathuong(e){
+	  var id = $(e).attr("id") ;
+	  $.ajax({
+      url: '/qlluongthuong/laythuong',
+      method:'get',
+      data:{"id":id},
+      dataType: 'json',
+      contentType: "application/json",
+      success: function (res) {
+         let ten_t = res.ten_t
+         let loai_t = res.loai_t
+         let muc_t = res.muc_t
+         $("input[name=saveNamePC]").val(ten_t);
+	     $("input[name=saveTypePC]").val(loai_t);
+	     $("input[name=saveLevelPC]").val(muc_t);
+	     $("#capnhatthuong").attr("idthuong",res.id)
+	     $('#dialog2').modal('show');
+      },
+      error: function (res) {
+       console.log(res)
+      }
+     });
+	}
+
+	function functiontest(e){
+        var message = 'Cập nhật thành công !' ;
+        var errorMes = 'Cập nhật thất bại'
+
+
+          var tent,loait,muct ,id = null ;
+
+          id = $("#capnhatthuong").attr("idthuong") ;
+
+          tent =   $("input[name=saveNamePC]").val();
+          loait = $("input[name=saveTypePC]").val();
+          muct = $("input[name=saveLevelPC]").val();
+
+	   var datas  = {
+	      "tent" : tent,
+	      "loait" : loait ,
+	      "muct" : muct ,
+	      "id" : id
+	   }
+
+	  $.ajax({
+      url: '/qlluongthuong/capnhatthuong',
+      method:'get',
+      data:datas,
+      dataType: 'json',
+      contentType: "application/json",
+      success: function (res) {
+
+       if(res==200) { alert(message);window.location.href="/qlluongthuong/qlthuong"}
+       else  alert(errorMes);
+      },
+      error: function (res) {
+       console.log(res)
+       alert(res)
+      }
+     });
+    }
+
+    function xoathuong(e){
+      var id = $(e).attr("id") ;
+
+       if(confirm("Bạn chắc chắn muốn xóa")){
+         $.ajax({
+      url: '/qlluongthuong/xoathuong',
+      method:'get',
+      data:{"id":id},
+      dataType: 'json',
+      contentType: "application/json",
+      success: function (res) {
+         if(res==200){ alert("Xóa thanh công") ; window.location.href="/qlluongthuong/qlthuong"}
+
+         else alert("Xóa thất bại")
+      },
+      error: function (res) {
+       console.log(res)
+      }
+     });
+       }
+    }
+</script>
+
+<script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'plugins/jszip/jszip.min.js' %}"></script>
+<script src="{% static 'plugins/pdfmake/pdfmake.min.js' %}"></script>
+<script src="{% static 'plugins/pdfmake/vfs_fonts.js' %}"></script>
+<script src=".{% static 'plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+{% endblock %}

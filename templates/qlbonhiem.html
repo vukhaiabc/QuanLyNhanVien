@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Trang Phiếu Bầu</h1>
+          </div>
+          <div class="col-sm-6">
+              <a class="btn btn-primary" type="button" href="{% url 'chitietbonhiem' %}" >Chi Tiết Hoạt Động Bầu Cử</a>
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Bổ Nhiệm</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <section class="content-header">
+      <div class="container-fluid">
+              <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">Thông Tin Hoạt Động Bổ Nhiệm</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form class="form-horizontal" method="post">
+                  {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Người Được Bổ Nhiệm</label>
+                    <div class="col-sm-10">
+                       <select class="select2bs4 form-control" style="width: 100%;" name="nguoiduocbonhiem">
+                           {% for item in nv %}
+                           <option value="{{item.id}}">{{item.first_name}} {{item.last_name}} - {{item.id}}</option>
+                            {% endfor %}
+                       </select>
+                    </div>
+                  </div>
+                    <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Nhân Viên Bổ Nhiệm</label>
+                    <div class="col-sm-10">
+                       <select class="form-control" style="width: 100%;" name="nhanVien">
+                           {% for item in nv %}
+                           <option value="{{item.id}}" >{{item.first_name}} {{item.last_name}} - {{item.id}}</option>
+                            {% endfor %}
+                       </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label  class="col-sm-2 col-form-label">Chức Vụ</label>
+                    <div class="col-sm-10">
+                      <select class="form-control" name="selectChucVu">
+                            {% for item in cv %}
+                                <option value="{{item.id}}">{{ item.ten_cv }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                  </div>
+                     <div class="form-group row">
+                    <label  class="col-sm-2 col-form-label">Ghi Chú</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control"  placeholder="Ghi Chú" name="ghiChu">
+                    </div>
+                  </div>
+                    <div class="form-group row">
+                        <h3>{{mess}}</h3>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-info">Cập Nhật</button>
+                  <a type="submit" href="/" class="btn btn-default float-right">Huỷ</a>
+                </div>
+                <!-- /.card-footer -->
+              </form>
+            </div>
+      </div>
+     </section>
+  </div>
+{% endblock %}
+{% block content1 %}
+<script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
+<script>
+    $(function () {
+      $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+    });
+</script>
+{% endblock %}

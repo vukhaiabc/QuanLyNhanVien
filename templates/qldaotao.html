@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Khoá Học Công Ty</h1>
+          </div>
+          <div class="col-sm-6">
+              <a class="btn btn-primary" type="button" href="{% url 'nhanvienkh' %}" >Thêm Khoá Đào Tạo Cho Nhân Viên</a>
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Khoá Học</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <section class="content">
+      <div class="container-fluid">
+       <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Danh Sách Khoá Học</h3>
+
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="search_nhanvien" class="form-control float-right" placeholder="Tìm Kiếm">
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn btn-default timnhanvien">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap" id ="mytb">
+                  <thead>
+                      <tr>
+                      <th>Tên Khoá Học</th>
+                      <th>Loại Khoá Học</th>
+                      <th>Nội Dung</th>
+                      <th>Giảng Viên</th>
+                      <th>Mô Tả</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for item in kh %}
+                    <tr id="{{item.id}}"  onclick="testt(this)">
+                    <td>{{item.tenkhoahoc}}</td>
+                    <td>{{item.loaikhoahoc}}</td>
+                    <td>{{item.noidung}}</td>
+                    <td>{{item.giangvien}}</td>
+                    <td>{{item.mota}}</td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        <!-- /.row -->
+          <a class="btn btn-primary" type="button" href="#" data-toggle="modal" data-target="#dialog1">Thêm Khoá Học</a>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <div class="modal fade" id="dialog1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="" method="post" >
+                {% csrf_token %}
+            <div class="modal-header">
+                <h5 class="modal-title">Thêm Khoá Học</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label >Tên Khoá Học</label>
+                    <input type="text" class="form-control" placeholder="Tên" name="tenkh" >
+                  </div>
+                  <div class="form-group">
+                    <label >Loại Khoá Học</label>
+                    <input type="text" class="form-control"  placeholder="Loại" name="loaikh" >
+                  </div>
+                    <div class="form-group">
+                    <label >Giảng Viên</label>
+                    <input type="text" class="form-control"  placeholder="Tên Giảng Viên" name="gvkh" >
+                  </div>
+                  <div class="form-group">
+                    <label >Nội Dung</label>
+                    <input type="text" class="form-control"  placeholder="Nội Dung" name="noidungkh" >
+                  </div>
+                  <div class="form-group">
+                    <label >Mô Tả</label>
+                    <input type="text" class="form-control"  placeholder="Mô Tả" name="motakh" >
+                  </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button"  class="btn btn-primary themkhoahoc">Lưu lại</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block content1 %}
+<script>
+    $('.themkhoahoc').click(function () { // xử lí thêm mới
+        var url = '/qldaotao/themkhoahoc' ;
+        var message = 'Thêm mới thành công !' ;
+        var errorMes = 'Bản ghi đã có trong CSDL'
+
+        tenkh =  $("input[name=tenkh]").val();
+        loaikh = $("input[name=loaikh]").val();
+        gvkh = $("input[name=gvkh]").val();
+        noidungkh = $("input[name=noidungkh]").val();
+        motakh = $("input[name=motakh]").val();
+         var datas  = {
+	      "tenkh" : tenkh,
+	      "loaikh" : loaikh ,
+	      "gvkh" : gvkh ,
+	      "noidungkh" : noidungkh,
+	      "motakh": motakh
+	       }
+	      $.ajax({
+      url: '/qldaotao/themkhoahoc' ,
+      method:'get',
+      data:datas,
+      dataType: 'json',
+      contentType: "application/json",
+      success: function (res) {
+
+       if(res==200) { alert("Thêm mới thành công ! ");window.location.reload()}
+       else  alert("Lưu thất bại , phụ cấp đã tồn tại");  //
+      },
+      error: function (res) {
+       console.log(res)
+       alert(res)
+      }
+     });
+
+	});
+</script>
+<script>
+    function testt(e){
+	  var id = $(e).attr("id") ;
+	  var link = "/qldaotao/chitiet/" + id
+	  window.location.href = link
+	}
+</script>
+{% endblock %}
